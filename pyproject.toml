@@ -1,0 +1,27 @@
+[project]
+name = "worksphere"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Ujjawal Shrivastav", email = "262270448+ushrivastva@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.20.1",
+    "email-validator>=2.3.0",
+    "fastapi[standard]>=0.162.7",
+    "httpx>=0.28.1",
+    "psycopg[binary]>=3.3.9",
+    "pwdlib[argon2]>=0.4.2",
+    "pydantic-settings>=2.16.3",
+    "pytest>=9.2.0",
+    "sqlalchemy>=2.1.9",
+]
+
+[project.scripts]
+worksphere = "worksphere:main"
+
+[build-system]
+requires = ["uv_build>=0.12.21,<0.13.0"]
+build-backend = "uv_build"
