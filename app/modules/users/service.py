@@ -37,3 +37,20 @@ def register_user(
         raise ValueError(
             "Email or username already exists"
         ) from exc
+
+def login_user(db:Session, email: str, password: str):
+    # ----> we use this for,"Find user by email"
+
+    user = repository.get_user_by_email(db, email)
+
+    if not user:
+        raise ValueError("Invalid email or password")
+
+    if not password_hash.verify(password, user.hashed_password):
+        raise ValueError("Invalid email or password")
+
+    if not user.is_active:
+        raise ValueError("User account is inactive")
+
+    return user
+
