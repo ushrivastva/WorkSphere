@@ -13,7 +13,7 @@ DatabaseSession = Annotated[Session, Depends(get_db)]
 
 def get_current_user(
     token: Annotated[
-        HTTPAuthorizationCredentials,
+        HTTPAuthorizationCredentials | None,
         Depends(oauth2_scheme)
     ],
     db: DatabaseSession
@@ -23,16 +23,19 @@ def get_current_user(
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    if token is None:
+        raise credentials_exception
 
     try: 
         payload = verify_access_token(token.credentials)
         user_id = payload.get("sub")
-
+        
         if user_id is None:
             raise credentials_exception
 
         user = repository.get_user_by_id(db, int(user_id))
 
+        
         if user is None:
             raise credentials_exception
 

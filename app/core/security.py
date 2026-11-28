@@ -1,13 +1,13 @@
 from datetime import datetime, timedelta, timezone
 from fastapi.security import HTTPBearer
 
-from jose import JWTError  # type: ignore
-import jwt   
+from jose import JWTError, jwt  # type: ignore
+ 
 
 from app.core.config import settings
 
 
-oauth2_scheme = HTTPBearer()
+oauth2_scheme = HTTPBearer(auto_error=False)
 def create_access_token(
         data: dict,
         expires_delta: timedelta | None = None,
